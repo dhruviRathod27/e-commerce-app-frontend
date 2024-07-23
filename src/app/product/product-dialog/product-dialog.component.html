@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>{{data.id ? 'Edit Product' : 'Add Product'}}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="productForm">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
+      <mat-error *ngIf="productForm.get('name')?.invalid">Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description">
+      <mat-error *ngIf="productForm.get('description')?.invalid">Description is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Image URL</mat-label>
+        <input matInput formControlName="imageUrl">
+        <mat-error *ngIf="productForm.get('imageUrl')?.invalid">Image Url is required</mat-error>
+      </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Price(In Rupees)</mat-label>
+      <input matInput formControlName="price" type="number">
+      <mat-error *ngIf="productForm.get('price')?.invalid">Valid price is required</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="onSaveClick()" [disabled]="productForm.invalid">Save</button>
+</div>
