@@ -1,0 +1,31 @@
+.container {
+    margin: 2rem;
+    max-width: 1000px;
+  }
+  
+  /* Mat Table Styles */
+  mat-table {
+    width: 100%;
+  }
+  
+  mat-header-cell {
+    font-weight: bold;
+    background-color: #f0f0f0;
+  }
+  
+  mat-cell {
+    padding: 0.5rem;
+  }
+  
+  mat-header-row, mat-row {
+    height: 48px;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 600px) {
+    .container {
+      width: 90%;
+      padding: 1rem;
+    }
+  }
+  

@@ -1,34 +1,40 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IProduct } from '../shared/interface';
+import { IProduct, NetworkResponse } from '../shared/interface';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private products = new BehaviorSubject<IProduct[]>([]);
-  private idCounter = 0;
-  products$ = this.products.asObservable();
+  constructor(private httpClient: HttpClient){}
 
   addProduct(product:Omit<IProduct, 'id'>) {
-    console.log(product);
-    const currentProducts = this.products.value;
-    const newProduct = { ...product, id: ++this.idCounter };
-    this.products.next([...currentProducts,newProduct]);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept':'*/*',
+    });
+    const options = {
+      headers
+    };
+    return this.httpClient.post<NetworkResponse<any>>(`/product`,product, options)
   }
 
-  updateProduct(updatedProduct: IProduct) {
-    const currentProducts = this.products.value.map(product => 
-        product.id == updatedProduct.id ? updatedProduct : product
-      );
-      this.products.next(currentProducts);
+  updateProduct(updatedProduct: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept':'*/*',
+    });
+    const options = {
+      headers
+    };
+    return this.httpClient.put<NetworkResponse<any>>(`/product/${updatedProduct._id}`,updatedProduct,options);
   }
 
-  deleteProduct(id: number) {
-    const currentProducts = this.products.value.filter(product => product.id !== id);
-    this.products.next(currentProducts);
+  deleteProduct(id: string) {
+    return this.httpClient.delete<NetworkResponse<any>>(`/product/${id}`)
   }
   getProducts() {
-    return this.products$;
+    return this.httpClient.get<NetworkResponse<Array<any>>>(`/product/table`)
   }
 }

@@ -17,7 +17,7 @@ export class ProductDialogComponent {
     private fb: FormBuilder
   ) {
     this.productForm = this.fb.group({
-      id: [data.id],
+      _id: [data._id],
       name: [data.name, Validators.required],
       description: [data.description, Validators.required],
       imageUrl: [data.imageUrl, Validators.required],

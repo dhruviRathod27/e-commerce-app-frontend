@@ -3,6 +3,7 @@ import { IProduct } from '../../shared/interface';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 import { ProductService } from '../product.service';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 @Component({
   selector: 'app-product-list',
@@ -10,22 +11,18 @@ import { ProductService } from '../product.service';
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent {
-  products: IProduct[] =[{
-    "id":1,
-    "name":"abc",
-    "description":"abc",
-    "imageUrl":"https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
-    "price":34000
-  }]
+  products: IProduct[] =[]
   displayedColumns: string[]=['id','name','description','price','image','actions'];
   constructor(
     private productService: ProductService, private dialog: MatDialog
   ) {
   }
   ngOnInit(){
-    this.productService.getProducts().subscribe(products => {
-      this.products = products
-      console.log(this.products)
+    this.productService.getProducts().subscribe(result => {
+      if(result && result.data){
+        this.products = result.data
+        console.log(this.products)
+      }
     });
   }
   openDialog(product?: IProduct): void {
@@ -36,17 +33,30 @@ export class ProductListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (result.id) {
-          this.productService.updateProduct(result);
+        if (result._id) {
+          this.productService.updateProduct(result).subscribe(result=>{
+            if(result && result.data){
+              Notify.success(result.message);
+            }
+          });
         } else {
-          this.productService.addProduct(result);
+          this.productService.addProduct(result).subscribe(result=>{
+            if(result && result.data){
+              Notify.success(result.message);
+            }
+          });
         }
       }
     });
   }
 
-  deleteProduct(id: number): void {
-    this.productService.deleteProduct(id);
+  deleteProduct(id: string): void {
+    this.productService.deleteProduct(id).subscribe(result=>{
+      window.location.reload();
+      if(result && result.data){
+        Notify.success(result.message);
+      }
+    });
   }
 
 }

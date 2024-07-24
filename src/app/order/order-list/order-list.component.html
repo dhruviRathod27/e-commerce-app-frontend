@@ -1,0 +1,38 @@
+<div class="container">
+    <mat-table [dataSource]="orders" class="mat-elevation-z8">
+  
+      <!-- Order ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{order._id}} </mat-cell>
+      </ng-container>
+  
+      <!-- Customer Name Column -->
+      <ng-container matColumnDef="customerName">
+        <mat-header-cell *matHeaderCellDef> Customer Name </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{order.customerName}} </mat-cell>
+      </ng-container>
+  
+      <!-- Order Date Column -->
+      <ng-container matColumnDef="orderDate">
+        <mat-header-cell *matHeaderCellDef> Order Date </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{order.orderDate}} </mat-cell>
+      </ng-container>
+  
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{order.status}} </mat-cell>
+      </ng-container>
+  
+      <!-- Total Amount Column -->
+      <ng-container matColumnDef="totalAmount">
+        <mat-header-cell *matHeaderCellDef> Total Amount </mat-header-cell>
+        <mat-cell *matCellDef="let order"> {{order.totalPrice | currency : 'INR'}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  

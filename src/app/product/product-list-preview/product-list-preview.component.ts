@@ -10,46 +10,16 @@ import { Router } from '@angular/router';
   styleUrl: './product-list-preview.component.css'
 })
 export class ProductListPreviewComponent implements OnInit {
-  products: IProduct[] = [{
-    "id":1,
-    "name":"abc",
-    "description":"abc",
-    "imageUrl":"https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
-    "price":34000
-  },
-  {
-    "id":2,
-    "name":"abc",
-    "description":"abc",
-    "imageUrl":"https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
-    "price":34000
-  },
-  {
-    "id":3,
-    "name":"abc",
-    "description":"abc",
-    "imageUrl":"https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
-    "price":34000
-  },
-  {
-    "id":4,
-    "name":"abc",
-    "description":"abc",
-    "imageUrl":"https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
-    "price":34000
-  },
-  {
-    "id":5,
-    "name":"abc",
-    "description":"abc",
-    "imageUrl":"https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
-    "price":34000
-  }];
+  products: IProduct[] = [];
 
   constructor(private productService: ProductService, private orderService: OrderService, private router: Router) {}
 
   ngOnInit() {
-    //this.productService.getProducts().subscribe(products => this.products = products);
+    this.productService.getProducts().subscribe(result =>{
+      if(result && result.data){
+        this.products = result.data;
+      }
+   } );
   }
 
   addToCart(product: IProduct) {

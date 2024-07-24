@@ -1,0 +1,21 @@
+.footer-toolbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1200px;
+    padding: 10px 0;
+    color: #fff;
+  }
+  
+  .footer-content span {
+    margin: 0 10px;
+  }
+  

@@ -6,7 +6,7 @@
       <div class="product-card" *ngFor="let product of products">
         <img [src]="product.imageUrl" alt="{{product.name}}">
         <div class="product-details">
-          <h2>{{ product.name }}</h2>
+          <label><strong>{{ product.name }}</strong></label>
           <p>{{ product.description }}</p>
           <p><strong>Price: ₹{{ product.price }}</strong></p>
           <!-- <mat-form-field class="quantity-input"> 
