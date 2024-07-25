@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { Notify } from 'notiflix';
+import { Role } from '../../shared/roles.enum';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,13 @@ export class LoginComponent {
       next :(response:any) => {
       console.log(localStorage);
       localStorage.setItem(this.tokenKey, response.data);
-      this.router.navigate(['/products']);
+      const role = this.authService.userRole;
+      if(role===Role.ADMIN){
+        this.router.navigate(['/products']);
+      }
+      else{
+        this.router.navigate(['/products/preview']);
+      }
     },
     error: error=> Notify.failure(error.message)
   });

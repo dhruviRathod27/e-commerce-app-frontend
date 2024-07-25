@@ -5,6 +5,7 @@ import { ProductDialogComponent } from '../product-dialog/product-dialog.compone
 import { ProductService } from '../product.service';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { AuthService } from '../../auth/auth.service';
+import { Role } from '../../shared/roles.enum';
 
 @Component({
   selector: 'app-product-list',
@@ -12,14 +13,17 @@ import { AuthService } from '../../auth/auth.service';
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent {
+  roleName= '';
+  ROLE=Role;
   products: IProduct[] = []
-  displayedColumns: string[] = ['id', 'name', 'description', 'price', 'image', 'actions'];
+  displayedColumns: string[] = ['name', 'description', 'price', 'image', 'actions'];
   constructor(
     private productService: ProductService, private dialog: MatDialog,
     private authService : AuthService
   ) {
   }
   ngOnInit() {
+    this.roleName = this.authService.userRole;
     this.productService.getProducts().subscribe({
       next: result => {
         if (result && result.data) {
@@ -32,7 +36,7 @@ export class ProductListComponent {
   }
   openDialog(product?: IProduct): void {
     const dialogRef = this.dialog.open(ProductDialogComponent, {
-      width: '250px',
+      width: '500px',
       data: product ? { ...product } : { name: '', description: '', price: 0 },
     });
 

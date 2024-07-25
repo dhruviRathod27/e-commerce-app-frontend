@@ -4,6 +4,7 @@ import { ProductService } from '../product.service';
 import { OrderService } from '../../order/order.service';
 import { Router } from '@angular/router';
 import { Notify } from 'notiflix';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-product-list-preview',
@@ -12,8 +13,7 @@ import { Notify } from 'notiflix';
 })
 export class ProductListPreviewComponent implements OnInit {
   products: IProduct[] = [];
-
-  constructor(private productService: ProductService, private orderService: OrderService, private router: Router) { }
+  constructor(private productService: ProductService, private orderService: OrderService) { }
 
   ngOnInit() {
     this.productService.getProducts().subscribe({

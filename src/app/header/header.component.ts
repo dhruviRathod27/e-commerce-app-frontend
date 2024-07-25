@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderService } from '../order/order.service';
 import { AuthService } from '../auth/auth.service';
+import { Role } from '../shared/roles.enum';
 
 @Component({
   selector: 'app-header',
@@ -10,10 +11,12 @@ import { AuthService } from '../auth/auth.service';
 })
 export class HeaderComponent implements OnInit {
   totalItems: number = 0;
-
-  constructor(private orderService: OrderService, private router: Router , private authService : AuthService) {}
+  ROLE = Role;
+  userRole = '';
+  constructor(private orderService: OrderService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
+    this.userRole = this.authService.userRole;
     this.orderService.cart$.subscribe(cart => {
       this.totalItems = cart.reduce((sum, product) => sum + (product.quantity || 0), 0);
     });
@@ -22,7 +25,8 @@ export class HeaderComponent implements OnInit {
   goToOrder() {
     this.router.navigate(['/cart']);
   }
-  logout(){
+  logout() {
+    this.orderService.clearCart();
     this.authService.logout();
   }
 }

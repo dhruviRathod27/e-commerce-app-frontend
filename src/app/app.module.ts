@@ -26,6 +26,7 @@ import { OrderListComponent } from './order/order-list/order-list.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppInterceptor } from './core/http-intercepter';
 import { JwtModule } from '@auth0/angular-jwt';
+import { MatTooltipModule } from '@angular/material/tooltip';
 export function tokenGetter() {
   return localStorage.getItem('auth_token');
 }
@@ -62,6 +63,7 @@ export function tokenGetter() {
     MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
+    MatTooltipModule,
     HttpClientModule
   ],
   providers: [

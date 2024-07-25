@@ -16,7 +16,11 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<{ token: string }>(`/login`, { username, password });
+    let role = 'user';
+    if(username === 'admin'){
+      role = 'admin'
+    }
+    return this.http.post<{ token: string }>(`/login`, { username, password , "role": role});
   }
 
   logout() {
@@ -26,11 +30,37 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    console.log('localstorage',localStorage);
-    if(localStorage){
+    if(this.isLocalStorageAvailable()){
+      if(localStorage){
         const token = localStorage.getItem(this.tokenKey);
         return !this.jwtHelper.isTokenExpired(token);
     }
+    }
     return false;
+  }
+  get userRole(): string {
+    if(this.isLocalStorageAvailable()){
+    const data= this.jwtHelper.decodeToken(localStorage.getItem(this.tokenKey) || '');
+    return data && data.role ? data.role :'';
+    }
+    return '';
+  }
+  get userName(): string {
+    const data= this.jwtHelper.decodeToken(localStorage.getItem(this.tokenKey) || '');
+    return data && data.username ? data.username: '';
+  }
+  get userId(): string {
+    const data= this.jwtHelper.decodeToken(localStorage.getItem(this.tokenKey) || '');
+    return data && data.userId ?data.userId :"";
+  }
+  private isLocalStorageAvailable(): boolean {
+    try {
+      const test = '__localStorage_test__';
+      localStorage.setItem(test, test);
+      localStorage.removeItem(test);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

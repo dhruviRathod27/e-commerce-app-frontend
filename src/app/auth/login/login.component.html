@@ -1,5 +1,5 @@
-<body>
-  <div class="form-container" >
+  <div class="main-container">
+    <div class="form-container" >
       <form (submit)="login()">
         <h3>Login</h3>
         <div class="form-group">
@@ -12,6 +12,7 @@
         </div>
         <button [disabled]= "!enableLoginBtn()" type="submit">Login</button>
       </form>
-      <button mat-button  [routerLink]="['/register']">sign-in</button>
+      <!-- <button mat-button  [routerLink]="['/register']">Sign-In</button> -->
+      Not a member? <a href="/register">Signup now</a>
     </div>
-  </body>
+  </div>

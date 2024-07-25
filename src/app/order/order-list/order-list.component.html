@@ -1,11 +1,15 @@
+<app-header></app-header>
+<mat-toolbar color="primary">
+  <span>Orders</span>
+</mat-toolbar>
 <div class="container">
     <mat-table [dataSource]="orders" class="mat-elevation-z8">
   
       <!-- Order ID Column -->
-      <ng-container matColumnDef="id">
+      <!-- <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
         <mat-cell *matCellDef="let order"> {{order._id}} </mat-cell>
-      </ng-container>
+      </ng-container> -->
   
       <!-- Customer Name Column -->
       <ng-container matColumnDef="customerName">

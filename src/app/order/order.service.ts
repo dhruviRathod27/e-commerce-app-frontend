@@ -3,12 +3,15 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { IOrder, IProduct, NetworkResponse } from '../shared/interface';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-    constructor(private httpClient: HttpClient){
+    constructor(private httpClient: HttpClient,
+      private authService: AuthService
+    ){
         
     }
   private cart: IProduct[] = [];
@@ -57,7 +60,8 @@ export class OrderService {
     const totalItems = cart.reduce((sum: any, product : any) => sum + (product.quantity || 0), 0);
     const totalPrice = this.cart.reduce((sum: any, product:any) => sum + ((product.price || 0) * (product.quantity || 0)), 0);
     const order ={
-      'customerName':'Dhruvita Rathod',
+      'customerName':this.authService.userName,
+      'customerId':this.authService.userId,
       'orderDate':new Date(),
       'status':'Received',
       'totalPrice': totalPrice,

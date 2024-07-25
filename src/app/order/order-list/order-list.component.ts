@@ -11,7 +11,7 @@ import { Notify } from 'notiflix';
 })
 export class OrderListComponent implements OnInit {
   orders: IOrder[] = [];
-  displayedColumns=['id','customerName','orderDate','status',
+  displayedColumns=['customerName','orderDate','status',
     'totalAmount'
   ]
   constructor(private orderService: OrderService) {}

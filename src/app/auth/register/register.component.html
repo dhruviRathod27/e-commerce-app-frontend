@@ -1,6 +1,6 @@
-<body><div class="form-container">
+<div class="main-container"><div class="form-container">
   <form (submit)="register()">
-    <h3>Sign In</h3>
+    <h3>Sign-In</h3>
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" id="username" [(ngModel)]="username" name="username" required>
@@ -9,8 +9,9 @@
       <label for="password">Password</label>
       <input type="password" id="password" [(ngModel)]="password" name="password" required>
     </div>
-    <button [disabled]= "!enableRegisterBtn()" type="submit">Register</button>
+    <button [disabled]= "!enableRegisterBtn()" type="submit">Register Now</button>
   </form>
-  <button mat-button  [routerLink]="['/login']">login</button>
+  <!-- <button mat-button  [routerLink]="['/login']">login</button> -->
+  Already have an accound? <a href="/login">Login now</a>
 </div>
-</body>
+</div>

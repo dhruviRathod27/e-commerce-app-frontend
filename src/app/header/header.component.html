@@ -1,17 +1,20 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button [routerLink]="['/products']">
+  <button mat-icon-button [routerLink]="['/products/preview']" matTooltip="Home">
     <mat-icon>home</mat-icon>
   </button>
   <span>My Store</span>
   <span class="spacer"></span>
-  <button mat-icon-button (click)="goToOrder()">
+  <button *ngIf="ROLE.ADMIN == userRole" mat-icon-button  matTooltip="Product List"[routerLink]="['/products']">
+    <mat-icon>list</mat-icon>
+  </button>
+  <button mat-icon-button (click)="goToOrder()" matTooltip="Cart">
     <mat-icon>shopping_cart</mat-icon>
     <span class="cart-badge" *ngIf="totalItems > 0">{{ totalItems }}</span>
   </button>
-  <button mat-icon-button [routerLink]="['/login']">
+  <button mat-icon-button [routerLink]="['/login']" matTooltip="Login">
     <mat-icon>account_circle</mat-icon>
   </button>
-  <button mat-icon-button (click)="logout()">
+  <button mat-icon-button (click)="logout()" matTooltip="Logout">
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
