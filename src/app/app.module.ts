@@ -51,7 +51,7 @@ export function tokenGetter() {
       config: {
         tokenGetter,
         allowedDomains: ['localhost:3000'],
-        disallowedRoutes: ['http://localhost:3000/login', 'http://localhost:3000/register']
+        disallowedRoutes: ['http://localhost:3000/api/login', 'http://localhost:3000/api/register']
       }
     }),
     MatToolbarModule,

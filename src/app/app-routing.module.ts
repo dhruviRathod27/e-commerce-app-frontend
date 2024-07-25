@@ -10,8 +10,6 @@ import { OrderListComponent } from './order/order-list/order-list.component';
 import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/products/preview', pathMatch: 'full' },
   { path: 'products/preview', component: ProductListPreviewComponent ,canActivate: [AuthGuard]},
   { path: 'products', component: ProductListComponent ,canActivate: [AuthGuard], data: { expectedRole: 'admin' }},
@@ -19,8 +17,8 @@ const routes: Routes = [
   { path: 'order-success', component: OrderSuccessComponent ,canActivate: [AuthGuard]},
   { path: 'order-list', component: OrderListComponent,canActivate: [AuthGuard] , data: { expectedRole: 'admin' }},
   { path: 'login', component: LoginComponent },
-  { path: 'sign-in', component: RegisterComponent },
-  { path: '**', redirectTo: '/login' },
+  { path: 'register', component: RegisterComponent },
+  { path: '**', redirectTo: '/products/preview' },
 ];
 
 @NgModule({
