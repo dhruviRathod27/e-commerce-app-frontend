@@ -3,6 +3,7 @@ import { IProduct } from '../../shared/interface';
 import { ProductService } from '../product.service';
 import { OrderService } from '../../order/order.service';
 import { Router } from '@angular/router';
+import { Notify } from 'notiflix';
 
 @Component({
   selector: 'app-product-list-preview',
@@ -12,14 +13,17 @@ import { Router } from '@angular/router';
 export class ProductListPreviewComponent implements OnInit {
   products: IProduct[] = [];
 
-  constructor(private productService: ProductService, private orderService: OrderService, private router: Router) {}
+  constructor(private productService: ProductService, private orderService: OrderService, private router: Router) { }
 
   ngOnInit() {
-    this.productService.getProducts().subscribe(result =>{
-      if(result && result.data){
-        this.products = result.data;
-      }
-   } );
+    this.productService.getProducts().subscribe({
+      next: result => {
+        if (result && result.data) {
+          this.products = result.data;
+        }
+      },
+      error: error => Notify.failure(error)
+    });
   }
 
   addToCart(product: IProduct) {
@@ -27,15 +31,4 @@ export class ProductListPreviewComponent implements OnInit {
     this.orderService.addToCart(product);
     //this.router.navigate(['/products/cart'])
   }
-  // increaseQuantity(product:IProduct) {
-  //   console.log('increaseQuantity called',product);
-  //   this.orderService.updateQuantity(product.id, (product.quantity || 1) + 1);
-  // }
-
-  // decreaseQuantity(product: IProduct) {
-  //   const currentQuantity =  0;
-  //   if (currentQuantity > 1) {
-  //     this.orderService.updateQuantity(product.id, currentQuantity - 1);
-  //   }
-  // }
 }

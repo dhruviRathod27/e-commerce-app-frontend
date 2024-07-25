@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../order.service';
 import { IProduct } from '../../shared/interface';
 import { Router } from '@angular/router';
+import { Notify } from 'notiflix';
 
 @Component({
   selector: 'app-order-summary',
@@ -30,11 +31,14 @@ export class OrderSummaryComponent implements OnInit {
     this.orderService.removeFromCart(productId);
   }
   proceedToBuy(){
-    this.orderService.placeOrder(this.cart).subscribe(result =>{
+    this.orderService.placeOrder(this.cart).subscribe({
+      next :result =>{
       console.log(result);
       this.orderService.clearCart();
       this.router.navigate(['/order-success']);
-    });
+    },
+    error: error=>Notify.failure(error.message)
+  });
 
   }
   increaseQuantity(productId: any) {

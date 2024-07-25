@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IOrder } from '../../shared/interface';
 import { OrderService } from '../order.service';
+import { Notify } from 'notiflix';
 
 
 @Component({
@@ -16,9 +17,12 @@ export class OrderListComponent implements OnInit {
   constructor(private orderService: OrderService) {}
 
   ngOnInit(): void {
-    this.orderService.getOrders().subscribe(result => {
+    this.orderService.getOrders().subscribe({
+      next :result => {
       if(result && result.data)
       this.orders = result.data;
-    });
+    },
+    error: error=> Notify.failure(error.message)
+  });
   }
 }

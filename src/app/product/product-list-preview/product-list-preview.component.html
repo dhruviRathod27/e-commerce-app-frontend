@@ -9,15 +9,6 @@
           <label><strong>{{ product.name }}</strong></label>
           <p>{{ product.description }}</p>
           <p><strong>Price: ₹{{ product.price }}</strong></p>
-          <!-- <mat-form-field class="quantity-input"> 
-            <mat-label>Quantity</mat-label>
-            <input matInput type="number" [(ngModel)]="product.quantity" min="1" value="1">
-          </mat-form-field> -->
-          <!-- <div class="quantity-control">
-            <button mat-mini-button (click)="decreaseQuantity(product)">-</button>
-            <span>{{ product.quantity }}</span>
-            <button mat-mini-button (click)="increaseQuantity(product)">+</button>
-          </div> -->
           <button mat-raised-button color="primary" (click)="addToCart(product)">Add to Cart</button>
         </div>
       </div>

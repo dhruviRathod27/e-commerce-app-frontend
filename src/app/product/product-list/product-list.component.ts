@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 import { ProductService } from '../product.service';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-product-list',
@@ -11,18 +12,22 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent {
-  products: IProduct[] =[]
-  displayedColumns: string[]=['id','name','description','price','image','actions'];
+  products: IProduct[] = []
+  displayedColumns: string[] = ['id', 'name', 'description', 'price', 'image', 'actions'];
   constructor(
-    private productService: ProductService, private dialog: MatDialog
+    private productService: ProductService, private dialog: MatDialog,
+    private authService : AuthService
   ) {
   }
-  ngOnInit(){
-    this.productService.getProducts().subscribe(result => {
-      if(result && result.data){
-        this.products = result.data
-        console.log(this.products)
-      }
+  ngOnInit() {
+    this.productService.getProducts().subscribe({
+      next: result => {
+        if (result && result.data) {
+          this.products = result.data
+          console.log(this.products)
+        }
+      },
+      error: error => Notify.failure(error.message)
     });
   }
   openDialog(product?: IProduct): void {
@@ -34,16 +39,24 @@ export class ProductListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result._id) {
-          this.productService.updateProduct(result).subscribe(result=>{
-            if(result && result.data){
-              Notify.success(result.message);
-            }
+          this.productService.updateProduct(result).subscribe({
+            next: result => {
+              if (result && result.data) {
+                Notify.success(result.message);
+                window.location.reload();
+              }
+            },
+            error: error => Notify.failure(error.message)
           });
         } else {
-          this.productService.addProduct(result).subscribe(result=>{
-            if(result && result.data){
-              Notify.success(result.message);
-            }
+          this.productService.addProduct(result).subscribe({
+            next: result => {
+              if (result && result.data) {
+                Notify.success(result.message);
+                window.location.reload();
+              }
+            },
+            error: error => Notify.failure(error.message)
           });
         }
       }
@@ -51,12 +64,15 @@ export class ProductListComponent {
   }
 
   deleteProduct(id: string): void {
-    this.productService.deleteProduct(id).subscribe(result=>{
+    this.productService.deleteProduct(id).subscribe({
+      next :result => {
       window.location.reload();
-      if(result && result.data){
+      if (result && result.data) {
         Notify.success(result.message);
       }
-    });
+    },
+    error: error=>Notify.failure(error.message)
+  });
   }
 
 }

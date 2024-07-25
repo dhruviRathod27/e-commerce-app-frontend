@@ -16,12 +16,7 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<{ token: string }>(`/login`, { username, password })
-      .subscribe((response:any) => {
-        console.log(localStorage);
-        localStorage.setItem(this.tokenKey, response.data);
-        this.router.navigate(['/products']);
-      });
+    return this.http.post<{ token: string }>(`/login`, { username, password });
   }
 
   logout() {

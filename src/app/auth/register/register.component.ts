@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { error } from 'console';
 
 @Component({
   selector: 'app-register',
@@ -16,12 +17,21 @@ export class RegisterComponent {
 
   register() {
     this.authService.register(this.username, this.password)
-      .subscribe((result: any) => {
+      .subscribe({
+        next :(result: any) => {
         if(result && result.data){
           Notify.success(result.message);
           console.log('User registered successfully');
           this.router.navigate(['/login']);
         }
-      });
+      },
+      error: error=>Notify.failure(error.message)
+    });
+  }
+  enableRegisterBtn(){
+    if(this.username!='' && this.password != ''){
+      return true;
+    }
+    return false;
   }
 }
